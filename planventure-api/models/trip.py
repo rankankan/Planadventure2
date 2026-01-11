@@ -15,10 +15,9 @@ class Trip(db.Model):
     itinerary = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
     updated_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
-    
-    # Relationship to User
-    user = db.relationship('User', backref=db.backref('trips', lazy=True, cascade='all, delete-orphan'))
-    
+    user = db.relationship('User', back_populates='trips')
+
+        # Relationship to User
     def __repr__(self):
         return f'<Trip {self.destination} ({self.start_date.strftime("%Y-%m-%d")})'
     

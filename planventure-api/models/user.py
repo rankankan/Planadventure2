@@ -1,6 +1,6 @@
 from app import db
 from datetime import datetime, timezone
-import bcrypt
+from utils.password import hash_password, verify_password
 
 class User(db.Model):
     """User model for storing user information"""
@@ -12,18 +12,22 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
     updated_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
-    trips = db.relationship('Trip', backref=db.backref('user', lazy=True, cascade='all, delete-orphan'))
+    trips = db.relationship('Trip', back_populates='user', lazy=True, cascade='all, delete-orphan')
+    """trips = db.relationship('Trip', back_populates  backref=db.backref('user', lazy=True, cascade='all, delete-orphan'))"""
+
+    def __init__(self, email):
+        self.email = email
+
     def __repr__(self):
         return f'<User {self.email}>'
     
     def set_password(self, password):
-        """Hash and set the user's password"""
-        salt = bcrypt.gensalt()
-        self.password_hash = bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
+        """Hash and set the user's password using bcrypt"""
+        self.password_hash = hash_password(password)
     
     def check_password(self, password):
         """Verify the provided password against the stored hash"""
-        return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
+        return verify_password(password, self.password_hash)
     
     def to_dict(self):
         """Convert user object to dictionary (excluding password)"""

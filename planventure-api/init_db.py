@@ -14,7 +14,7 @@ def init_db():
     with app.app_context():
         try:
             # Drop existing tables (optional - uncomment if you want fresh start)
-            # db.drop_all()
+            db.drop_all()
             
             # Create all tables
             db.create_all()
