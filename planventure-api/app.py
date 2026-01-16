@@ -34,9 +34,13 @@ from utils.jwt_utils import generate_tokens
 from utils.password import hash_password, verify_password
 from utils.email_validator import is_valid_email
 from middleware.auth import token_required, optional_token_required, setup_jwt_error_handlers
+from routes.trips import trips_bp
 
 # Setup JWT error handlers
 setup_jwt_error_handlers(app)
+
+# Register blueprints
+app.register_blueprint(trips_bp)
 
 @app.route('/')
 def home():
