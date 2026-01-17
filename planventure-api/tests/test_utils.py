@@ -86,7 +86,31 @@ class TestPasswordUtils:
         assert hashed != password
         # Hash should be long (bcrypt hashes are ~60 chars       )
         assert len(hashed) > 50
+
+    def test_hash_password_TWO(self):
+        """Test that password is properly hashed"""
+        password = 'testpassword123'
+        hashed = hash_password(password)
+        
+        # Hash should be a string
+        assert isinstance(hashed, str)
+        # Hash should not equal original password
+        assert hashed != password
+        # Hash should be long (bcrypt hashes are ~60 chars       )
+        assert len(hashed) > 50
     
+    
+    def test_hash_password_THREE(self):
+        """Test that password is properly hashed"""
+        password = 'testpassword123'
+        hashed = hash_password(password)
+        
+        # Hash should be a string
+        assert isinstance(hashed, str)
+        # Hash should not equal original password
+        assert hashed != password
+        # Hash should be long (bcrypt hashes are ~60 chars       )
+        assert len(hashed) > 50
     def test_verify_correct_password(self):
         """Test that correct password verifies successfully"""
         password = 'correctpassword'
