@@ -84,7 +84,7 @@ class TestPasswordUtils:
         assert isinstance(hashed, str)
         # Hash should not equal original password
         assert hashed != password
-        # Hash should be long (bcrypt hashes are ~60 chars)
+        # Hash should be long (bcrypt hashes are ~60 chars       )
         assert len(hashed) > 50
     
     def test_verify_correct_password(self):
@@ -104,7 +104,7 @@ class TestPasswordUtils:
     
     def test_different_hashes_same_password(self):
         """Test that same password produces different hashes"""
-        password = 'testpassword'
+        password = 'test&password$'
         hash1 = hash_password(password)
         hash2 = hash_password(password)
         
@@ -131,7 +131,7 @@ class TestPasswordUtils:
     
     def test_hash_with_custom_rounds(self):
         """Test hashing with custom salt rounds"""
-        password = 'testpass'
+        password = 'testpass2'
         salt = generate_salt(rounds=10)
         hashed = hash_password(password, salt)
         
