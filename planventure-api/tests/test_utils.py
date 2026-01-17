@@ -84,7 +84,7 @@ class TestPasswordUtils:
         assert isinstance(hashed, str)
         # Hash should not equal original password
         assert hashed != password
-        # Hash should be long (bcrypt hashes are ~60 chars)
+        # Hash should be long (bcrypt hashes are ~60 chars       )
         assert len(hashed) > 50
     
     def test_verify_correct_password(self):
